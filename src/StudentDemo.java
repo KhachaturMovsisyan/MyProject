@@ -45,9 +45,6 @@ public class StudentDemo implements Commands {
         }
 
 
-
-
-
     }
 
     private static void login() {
@@ -55,12 +52,12 @@ public class StudentDemo implements Commands {
         String email = scanner.nextLine();
         System.out.println("please input student's password");
         String password = scanner.nextLine();
-        if (userStorage.getUserByEmailAndpassword(email, password)==null){
+        if (userStorage.getUserByEmailAndpassword(email, password) == null) {
             System.out.println("Wrong email or password");
-        }else {
-            if (userStorage.getUserByEmailAndpassword(email, password).getType().equals("Admin")){
+        } else {
+            if (userStorage.getUserByEmailAndpassword(email, password).getType().equals("Admin")) {
                 adminPage();
-            }else {
+            } else {
                 userPage();
             }
         }
@@ -238,18 +235,7 @@ public class StudentDemo implements Commands {
         } else {
             System.out.println("lesson with this name already exist");
         }
-
-
     }
 
-    private static void printCommands() {
-        System.out.println("Please imput " + EXIT + " for EXIT");
-        System.out.println("Please imput " + ADD_LESSON + " for ADD_LESSON");
-        System.out.println("Please imput " + ADD_STUDENT + " for ADD_STUDENT");
-        System.out.println("Please imput " + PRINT_STUDENTS + " for PRINT_STUDENTS");
-        System.out.println("Please imput " + PRINT_STUDENTS_BY_LESSON + " for PRINT_STUDENTS_BY_LESSON");
-        System.out.println("Please imput " + PRINT_LESSONS + " for PRINT_LESSONS");
-        System.out.println("Please imput " + DELETE_LESSON_BY_NAME + " for DELETE_LESSON_BY_NAME");
-        System.out.println("Please imput " + DELETE_STUDENT_BY_EMAIL + " for DELETE_STUDENT_BY_EMAIL");
-    }
+
 }
