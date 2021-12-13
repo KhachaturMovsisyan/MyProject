@@ -1,6 +1,7 @@
-package storage;
+package studentProject.storage;
 
-import model.User;
+import studentProject.exception.UserNotFoundException;
+import studentProject.model.User;
 
 public class UserStorage {
         private User[] users = new User[10];
@@ -21,16 +22,16 @@ public class UserStorage {
             users = newArray;
         }
 
-    public User getUserByEmail(String userDate) {
+    public Object getUserByEmail (String userDate) throws UserNotFoundException {
         for (int i = 0; i < size; i++) {
             if (users[i].getEmail().equals(userDate)){
                 return users[i];
             }
         }
-        return null;
+        throw  new UserNotFoundException();
     }
 
-    public User getUserByEmailAndpassword(String email, String password) {
+    public User getUserByEmailAndPassword(String email, String password) {
         for (int i = 0; i < size; i++) {
             if (users[i].getEmail().equals(email)&&users[i].getPassword().equals(password)){
                 return users[i];

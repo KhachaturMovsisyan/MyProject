@@ -1,4 +1,4 @@
-package model;
+package studentProject.model;
 
 import java.util.Objects;
 
