@@ -2,60 +2,39 @@ package studentProject.storage;
 
 import studentProject.model.Lesson;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class LessonStorage {
-    private Lesson[] lessons = new Lesson[10];
-    private int size = 0;
+    private List<Lesson> list = new LinkedList<>();
+
 
     public void add(Lesson lesson) {
+        list.add(lesson);
 
-        if (size == lessons.length) {
-            extend();
-        }
-        lessons[size++] = lesson;
     }
 
-    private void extend() {
-        Lesson[] newLesson = new Lesson[lessons.length + 10];
-        System.arraycopy(lessons, 0, newLesson, 0, lessons.length);
-        lessons = newLesson;
-    }
-
-    public Lesson getByIndex(int index) {
-        if (index < lessons.length) {
-
-            return lessons[index];
-        } else {
-            System.err.println("Lesson not found");
-            return null;
-        }
-    }
 
     public void printLessons() {
-        for (int i = 0; i < size; i++) {
-            System.out.println(lessons[i]);
+        for (Lesson lesson : list) {
+            System.out.println(lesson);
+            //System.out.println("The lesson has been deleted");
         }
     }
 
     public void deleteLessonByName(String name) {
-        for (int i = 0; i < size; i++) {
-            if (lessons[i].getName().equals(name)) {
-                deleteLesson();
+        for (Lesson lesson : list) {
+            if (lesson.getName().equals(name)) {
+                list.remove(lesson);
                 System.out.println("The lesson has been deleted");
             }
         }
     }
 
-    private void deleteLesson() {
-        for (int i = 0; i < size; i++) {
-            lessons[i] = lessons[i + 1];
-            size--;
-        }
-    }
-
     public Lesson getLessonByName(String name) {
-        for (int i = 0; i < size; i++) {
-            if (lessons[i].getName().equals(name)) {
-                return lessons[i];
+        for (Lesson lesson : list) {
+            if (lesson.getName().equals(name)){
+                return lesson;
             }
         }
         return null;

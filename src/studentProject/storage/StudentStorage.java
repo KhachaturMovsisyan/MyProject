@@ -3,78 +3,52 @@ package studentProject.storage;
 import studentProject.exception.UserNotFoundException;
 import studentProject.model.Student;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class StudentStorage {
-    private Student[] students = new Student[10];
+    private List<Student> studentList = new LinkedList<>();
     private int size = 0;
 
 
     public void add(Student student) {
+        studentList.add(student);
 
-        if (size == students.length) {
-            extend();
-        }
-        students[size++] = student;
     }
 
-    private void extend() {
-        Student[] newArray = new Student[students.length + 10];
-        System.arraycopy(students, 0, newArray, 0, students.length);
-        students = newArray;
-    }
 
-    public Student getByIndex(int index) {
-        if (index < students.length) {
 
-            return students[index];
-        } else {
-            System.out.println("Student not found");
-            return null;
-        }
-    }
 
     public void printStudent() {
-        for (int i = 0; i < size; i++) {
-            System.out.println(students[i]);
+        for (Student student : studentList) {
+            System.out.println(student);
         }
     }
 
-//    public void printStudentByLesson(String name) {
-//        for (int i = 0; i < size; i++) {
-//        //    if (students[i].getLesson().getName().contains(name)){
-//                System.out.println(students[i]);
-//            }
-//        }
-//    }
 
     public void deleteStudentByEmail(String email) {
-        for (int i = 0; i < size; i++) {
-            if (students[i].getEmail().equals(email)){
-                deleteStudent();
+        for (Student student : studentList) {
+            if (student.getEmail().equals(email)) {
+                studentList.remove(student);
             }
         }
     }
 
-    private void deleteStudent() {
-        for (int i = 0; i < size; i++) {
-            students[i]=students[i+1];
-            size--;
-        }
-    }
 
     public Student getByEmail(String email) throws UserNotFoundException {
-        for (int i = 0; i < size; i++) {
-            if (students[i].getEmail().equals(email)){
-                return students[i];
+        for (Student student : studentList) {
+            if (student.getEmail().equals(email)){
+                return student;
             }
         }
         throw new UserNotFoundException();
     }
 
     public void printStudentByLesson(String name) {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < students[i].getLessons().length; j++) {
-                if (students[i].getLessons()[j].getName().equals(name)){
-                    System.out.println(students[i]);
+        for (Student student : studentList) {
+            for (int j = 0; j < student.getLessons().length; j++) {
+                if (student.getLessons()[j].getName().equals(name)) {
+                    System.out.println(student);
                 }
             }
         }
