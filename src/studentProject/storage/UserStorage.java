@@ -1,32 +1,27 @@
 package studentProject.storage;
 
-import studentProject.exception.UserNotFoundException;
 import studentProject.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserStorage {
-    private List<User> userList = new ArrayList<>();
+    private Map<String, User> userMaps = new HashMap<>();
 
     public void add(User user) {
-        userList.add(user);
-
+        userMaps.put(user.getEmail(), user);
     }
 
 
-    public Object getUserByEmail(String userDate) throws UserNotFoundException {
-        for (User user : userList) {
-            if (user.getEmail().equals(userDate)) {
-                return user;
-            }
-        }
-        throw new UserNotFoundException();
+    public User getUserByEmail(String email) {
+
+        User user = userMaps.get(email);
+        return user;
     }
 
     public User getUserByEmailAndPassword(String email, String password) {
-        for (User user : userList) {
-            if (user.getEmail().equals(email) && user.getPassword().equals(password)){
+        for (User user : userMaps.values()) {
+            if(user.getEmail().equals(email) && user.getPassword().equals(password)){
                 return user;
             }
         }

@@ -32,9 +32,6 @@ public class StudentDemo implements Commands {
         studentStorage.add(new Student("petros", "petrosyan", 15, "petros@mai.ru", "04444444", lessons));
 
 
-
-
-
         boolean isRUn = true;
         while (isRUn) {
             Commands.printNewCommands();
@@ -144,10 +141,9 @@ public class StudentDemo implements Commands {
         System.out.println("Please input name, surname, email, password");
         String userDate = scanner.nextLine();
         String[] userDates = userDate.split(",");
-        try {
-            userStorage.getUserByEmail(userDates[2]);
+        if (userStorage.getUserByEmail(userDates[2]) != null) {
             System.out.println("user with this email already exist");
-        } catch (UserNotFoundException e) {
+        } else {
             if (userDates[2].equals("email") && userDates[3].equals("password")) {
                 User admin = new User(userDates[0], userDates[1], userDates[2], userDates[3], "Admin");
                 userStorage.add(admin);
@@ -158,6 +154,7 @@ public class StudentDemo implements Commands {
                 System.out.println("You are registered");
             }
         }
+
     }
 
 
@@ -232,11 +229,10 @@ public class StudentDemo implements Commands {
                 studentStorage.add(student);
                 System.out.println("student added");
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("age must be a number");
         }
     }
-
 
 
     private static void addLesson() {
@@ -256,7 +252,7 @@ public class StudentDemo implements Commands {
             } else {
                 System.out.println("lesson with this name already exist");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("duration and price should numbers");
         }
 
