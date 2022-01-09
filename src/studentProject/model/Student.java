@@ -1,9 +1,10 @@
 package studentProject.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Student {
+public class Student implements Serializable {
     private String name;
     private String surname;
     private int age;

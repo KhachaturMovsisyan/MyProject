@@ -1,5 +1,6 @@
 package studentProject.storage;
 
+import studentProject.data.DataClass;
 import studentProject.model.Lesson;
 
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ public class LessonStorage {
 
     public void add(Lesson lesson) {
         list.add(lesson);
+        serial();
 
     }
 
@@ -26,6 +28,7 @@ public class LessonStorage {
         for (Lesson lesson : list) {
             if (lesson.getName().equals(name)) {
                 list.remove(lesson);
+                serial();
                 System.out.println("The lesson has been deleted");
             }
         }
@@ -33,10 +36,21 @@ public class LessonStorage {
 
     public Lesson getLessonByName(String name) {
         for (Lesson lesson : list) {
-            if (lesson.getName().equals(name)){
+            if (lesson.getName().equals(name)) {
                 return lesson;
             }
         }
         return null;
+    }
+
+    public void serial() {
+        DataClass.serializeLessons(list);
+    }
+
+    public void initData() {
+        List<Lesson> lessonList = DataClass.deSerializeLessons(); // java mava c++
+        if (lessonList != null) {
+            list = lessonList;
+        }
     }
 }

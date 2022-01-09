@@ -1,5 +1,6 @@
 package studentProject.storage;
 
+import studentProject.data.DataClass;
 import studentProject.exception.UserNotFoundException;
 import studentProject.model.Student;
 
@@ -8,16 +9,11 @@ import java.util.List;
 
 public class StudentStorage {
     private List<Student> studentList = new LinkedList<>();
-    private int size = 0;
-
 
     public void add(Student student) {
         studentList.add(student);
-
+        serial();
     }
-
-
-
 
     public void printStudent() {
         for (Student student : studentList) {
@@ -30,6 +26,7 @@ public class StudentStorage {
         for (Student student : studentList) {
             if (student.getEmail().equals(email)) {
                 studentList.remove(student);
+                serial();
             }
         }
     }
@@ -51,6 +48,16 @@ public class StudentStorage {
                     System.out.println(student);
                 }
             }
+        }
+    }
+
+    public  void serial() {
+        DataClass.serializeStudents(studentList);
+    }
+    public void initData() {
+        List<Student> students = DataClass.deSerializeStudents();
+        if (students!= null) {
+            studentList = students;
         }
     }
 }

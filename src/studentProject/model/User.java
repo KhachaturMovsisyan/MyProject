@@ -1,8 +1,9 @@
 package studentProject.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
     private  String name;
     private  String surname;
     private  String email;

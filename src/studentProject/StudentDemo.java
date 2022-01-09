@@ -15,25 +15,14 @@ public class StudentDemo implements Commands {
     private static LessonStorage lessonStorage = new LessonStorage();
     private static StudentStorage studentStorage = new StudentStorage();
     private static UserStorage userStorage = new UserStorage();
-
+    private static Thread thread = new Thread();
 
     public static void main(String[] args) {
-        Lesson[] lessons = new Lesson[3];
-        lessons[0] = new Lesson("Java", 5, "core", 50000);
-        lessons[1] = new Lesson("C", 10, "core", 50000);
-        lessons[2] = new Lesson("Python", 14, "core", 50000);
-        lessonStorage.add(lessons[0]);
-        lessonStorage.add(lessons[1]);
-        lessonStorage.add(lessons[2]);
-
-        userStorage.add(new User("martiros", "martirosyan", "mart@mail.ru", "user", "Admin"));
-
-        studentStorage.add(new Student("poxos", "poxosyan", 55, "poxos@mail.ru", "093333333", lessons));
-        studentStorage.add(new Student("petros", "petrosyan", 15, "petros@mai.ru", "04444444", lessons));
 
 
         boolean isRUn = true;
         while (isRUn) {
+            initData();
             Commands.printNewCommands();
             String newCommand = scanner.nextLine();
             switch (newCommand) {
@@ -55,9 +44,9 @@ public class StudentDemo implements Commands {
     }
 
     private static void login() {
-        System.out.println("please input student's email");
+        System.out.println("please input user's email");
         String email = scanner.nextLine();
-        System.out.println("please input student's password");
+        System.out.println("please input user's password");
         String password = scanner.nextLine();
         if (userStorage.getUserByEmailAndPassword(email, password) == null) {
             System.out.println("Wrong email or password");
@@ -150,8 +139,10 @@ public class StudentDemo implements Commands {
                 System.out.println("You are registered");
             } else {
                 User user = new User(userDates[0], userDates[1], userDates[2], userDates[3], "User");
+                loading();
                 userStorage.add(user);
                 System.out.println("You are registered");
+                userStorage.serial();
             }
         }
 
@@ -167,6 +158,7 @@ public class StudentDemo implements Commands {
             System.out.println("Student not found");
         }
         studentStorage.deleteStudentByEmail(email);
+        studentStorage.serial();
 
         System.out.println("wrong email");
     }
@@ -177,6 +169,8 @@ public class StudentDemo implements Commands {
         String name = scanner.nextLine();
         if (lessonStorage.getLessonByName(name) != null) {
             lessonStorage.deleteLessonByName(name);
+            lessonStorage.serial();
+
         } else {
             System.err.println("wrong lesson name");
         }
@@ -228,6 +222,7 @@ public class StudentDemo implements Commands {
                 Student student = new Student(name, surname, age, email, phone, lessons);
                 studentStorage.add(student);
                 System.out.println("student added");
+                studentStorage.serial();
             }
         } catch (NumberFormatException e) {
             System.out.println("age must be a number");
@@ -248,12 +243,34 @@ public class StudentDemo implements Commands {
             if (lessonStorage.getLessonByName(name) == null) {
                 Lesson lesson = new Lesson(name, duration, lecturerName, price);
                 lessonStorage.add(lesson);
+                loading();
                 System.out.println("lesson added");
+                lessonStorage.serial();
             } else {
                 System.out.println("lesson with this name already exist");
             }
         } catch (Exception e) {
             System.out.println("duration and price should numbers");
+        }
+
+    }
+
+    private static void initData() {
+        studentStorage.initData();
+        userStorage.initData();
+        lessonStorage.initData();
+    }
+
+    private static void loading() {
+        System.out.println("Loading");
+        try {
+            for (int i = 0; i < 7; i++) {
+                Thread.sleep(300);
+                System.out.print("-");
+            }
+            System.out.println();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
     }

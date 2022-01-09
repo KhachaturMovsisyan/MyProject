@@ -1,5 +1,6 @@
 package studentProject.storage;
 
+import studentProject.data.DataClass;
 import studentProject.model.User;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ public class UserStorage {
 
     public void add(User user) {
         userMaps.put(user.getEmail(), user);
+        serial();
     }
 
 
@@ -26,5 +28,16 @@ public class UserStorage {
             }
         }
         return null;
+    }
+
+    public void serial() {
+        DataClass.serializeUsers(userMaps);
+    }
+
+    public void initData() {
+        Map<String, User> userMap = DataClass.deSerializeUsers();
+        if (userMap!= null) {
+            userMaps = userMap;
+        }
     }
 }
